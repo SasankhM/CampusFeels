@@ -1,21 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import { Text, View, StyleSheet} from 'react-native';
-
-export default class App extends React.Component {
-  state = {
-     myState: 'Campus Feels'
-  }
-  updateState = () =>this.setState({myState: 'The state is updated'})
-  render(){
-      return (
-        <View>
-          <Text onPress = {this.updateState} style = {styles.textStyle}>
-              {this.state.myState}
-              </Text>
-        </View>
-      );
-=======
 import React, { Component } from 'react';
 import {AppRegistry, Text,Button, StyleSheet, Alert, TextInput, View} from 'react-native';
 
@@ -23,11 +5,23 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mood: ''
+      input: ''
     }
   }
 
-handleChangeInput = (text) => { this.setState({mood: text })}
+handleChangeInput = (text) => { this.setState({input: text })}
+
+// function getSentimentAsync() {
+//   return fetch('http://text-processing.com/api/sentiment/')
+//     .then((response) => response.json())
+//     .then((responseJson) => {
+//       return responseJson.movies;
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     });
+// }
+
   render() {
     return (
       <View style={styles.container}>
@@ -35,27 +29,28 @@ handleChangeInput = (text) => { this.setState({mood: text })}
         <View style={{padding: 10}}>
         <TextInput
           style={{height: 40}}
-          placeholder="Mood?"
+          placeholder="How do you feel this morning?"
           onChangeText={this.handleChangeInput}
         />
         <Button
           onPress={() => {
-            Alert.alert('You tapped the button!');
+            this.handleChangeInput
+            Alert.alert(this.state.input);
           }}
           title="SUBMIT"
         />
       </View>
       </View>
     );
->>>>>>> d7951a00fa78896dcbd70a7f85068ef14cb69c19
   }
 }
 
 const styles = StyleSheet.create ({
-   textStyle: {
+   container: {
      color: 'blue',
-     marginTop: 20,
-     textAlign : 'center',
+     marginTop: 50,
+     alignItems : 'center',
+     alignSelf: 'center',
      fontSize: 40
    }
 });
