@@ -1,21 +1,27 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View, StyleSheet} from 'react-native';
 
 export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Campus Feels</Text>
-      </View>
-    );
+  state = {
+     myState: 'Campus Feels'
+  }
+  updateState = () =>this.setState({myState: 'The state is updated'})
+  render(){
+      return (
+        <View>
+          <Text onPress = {this.updateState} style = {styles.textStyle}>
+              {this.state.myState}
+              </Text>
+        </View>
+      );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const styles = StyleSheet.create ({
+   textStyle: {
+     color: 'blue',
+     marginTop: 20,
+     textAlign : 'center',
+     fontSize: 40
+   }
 });
