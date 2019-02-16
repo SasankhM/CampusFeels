@@ -5,22 +5,33 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: ''
+      input: '',
+      output: ''
     }
   }
 
 handleChangeInput = (text) => { this.setState({input: text })}
 
-// function getSentimentAsync() {
-//   return fetch('http://text-processing.com/api/sentiment/')
-//     .then((response) => response.json())
-//     .then((responseJson) => {
-//       return responseJson.movies;
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     });
-// }
+async getSentimentAsync(text) {
+  // var form = new FormData();
+  // form.append("text", text);
+  fetch("http://text-processing.com/api/sentiment/", {
+     method: "POST",
+     body: "text=" + text,
+     headers: {
+         "Content-Type": "application/x-www-form-urlencoded"
+     }
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      this.setState({output: responseJson.probability.pos.toString()})
+      Alert.alert(this.state.output);
+    })
+
+    .catch((error) => {
+      console.error(error);
+    });
+}
 
   render() {
     return (
@@ -35,7 +46,7 @@ handleChangeInput = (text) => { this.setState({input: text })}
         <Button
           onPress={() => {
             this.handleChangeInput
-            Alert.alert(this.state.input);
+            this.getSentimentAsync(this.state.input);
           }}
           title="SUBMIT"
         />
