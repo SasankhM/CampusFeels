@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {AppRegistry, Text,Button, StyleSheet, Alert, TextInput, View} from 'react-native';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
-//import {AppNavigator} from './home.js';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -11,10 +10,6 @@ class HomeScreen extends React.Component {
         output: ''
       }
   }
-
-  static navigationOptions = {
-   title: 'Home',
- };
 
   render() {
     return (
@@ -31,8 +26,8 @@ class HomeScreen extends React.Component {
                   <Button
                       style = {styles.buttonStyle}
                       onPress={() => {
-                        this.handleChangeInput
-                        this.getSentimentAsync(this.state.input);
+                      this.handleChangeInput
+                      this.getSentimentAsync(this.state.input);
                       }}
                       title = "SUBMIT"
                       color = "black"
@@ -42,7 +37,7 @@ class HomeScreen extends React.Component {
     );
   }
 
-  handleChangeInput = (text) => {this.setState({input: text })}
+  handleChangeInput = (text) => { this.setState({input: text })}
 
   async getSentimentAsync(text) {
     fetch("http://text-processing.com/api/sentiment/", {
@@ -55,7 +50,7 @@ class HomeScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({output: responseJson.probability.pos.toString()})
-        this.props.navigation.navigate('Map', {printItem: this.state.output});
+        Alert.alert(this.state.output);
       })
 
       .catch((error) => {
@@ -63,33 +58,6 @@ class HomeScreen extends React.Component {
       });
   }
 }
-
-class MapScreen extends React.Component{
-  static navigationOptions = {
-   title: 'Map',
- };
-  render(){
-    const printItem = this.props.navigation.getParam('printItem', 'No-Value');
-    return(
-      <View style = {{marginTop: 100, postion: 'absolute'}}>
-        <Text>{JSON.stringify(printItem)}</Text>
-      </View>
-    );
-  }
-}
-
-
-const AppNavigator = createStackNavigator({
-  Home: {
-    screen: HomeScreen,
-  },
-  Map: {
-    screen: MapScreen,
-  },
-}, {
-    initialRouteName: 'Home',
-});
-
 
 const styles = StyleSheet.create ({
    container: {
@@ -116,6 +84,12 @@ const styles = StyleSheet.create ({
      marginTop: 10,
      opacity: 0.5
    }
+});
+
+const AppNavigator = createStackNavigator({
+  Home: {
+    screen: HomeScreen
+  }
 });
 
 export default createAppContainer(AppNavigator);
