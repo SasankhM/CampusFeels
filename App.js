@@ -24,7 +24,7 @@ async getSentimentAsync(text) {
     })
     .then((response) => response.json())
     .then((responseJson) => {
-      this.setState({output: responseJson.probability.pos.toString()})
+      this.setState({output: responseJson.label})
       Alert.alert(this.state.output);
     })
 
