@@ -4,12 +4,35 @@ import {AppRegistry, Text,Button, StyleSheet, Alert, TextInput, View} from 'reac
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    state = {
-      mood: ''
+    this.state = {
+        input: '',
+        output: ''
+      }
     }
-  }
 
-handleChangeInput = (text) => { this.setState({mood: text })}
+
+handleChangeInput = (text) => { this.setState({input: text })}
+async getSentimentAsync(text) {
+  // var form = new FormData();
+  // form.append("text", text);
+  fetch("http://text-processing.com/api/sentiment/", {
+     method: "POST",
+     body: "text=" + text,
+     headers: {
+         "Content-Type": "application/x-www-form-urlencoded"
+     }
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      this.setState({output: responseJson.probability.pos.toString()})
+      Alert.alert(this.state.output);
+    })
+
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
   render() {
     return (
       <View style={styles.container}>
@@ -26,13 +49,13 @@ handleChangeInput = (text) => { this.setState({mood: text })}
                       style = {styles.buttonStyle}
                       onPress={() => {
                       this.handleChangeInput
-                      Alert.alert(this.state.mood);
+                      this.getSentimentAsync(this.state.input);
                       }}
                       title = "SUBMIT"
                       color = "black"
                   />
               </View>
-      </View>
+       </View>
     );
   }
 }
