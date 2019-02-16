@@ -4,7 +4,7 @@ import {AppRegistry, Text,Button, StyleSheet, Alert, TextInput, View} from 'reac
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+    state = {
       mood: ''
     }
   }
@@ -13,20 +13,25 @@ handleChangeInput = (text) => { this.setState({mood: text })}
   render() {
     return (
       <View style={styles.container}>
-          <Text>Campus Feels</Text>
-        <View style={{padding: 10}}>
-        <TextInput
-          style={{height: 40}}
-          placeholder="Mood?"
-          onChangeText={this.handleChangeInput}
-        />
-        <Button
-          onPress={() => {
-            Alert.alert('You tapped the button!');
-          }}
-          title="SUBMIT"
-        />
-      </View>
+              <View style = {styles.textBoxContainer}></View>
+              <View style = {{position: 'relative'}}>
+                  <TextInput
+                      style={styles.textStyle}
+                      placeholder = "How do you feel this morning?"
+                      onChangeText = {this.handleChangeInput}
+                  />
+              </View>
+              <View style = {styles.buttonContainer}>
+                  <Button
+                      style = {styles.buttonStyle}
+                      onPress={() => {
+                      this.handleChangeInput
+                      Alert.alert(this.state.mood);
+                      }}
+                      title = "SUBMIT"
+                      color = "black"
+                  />
+              </View>
       </View>
     );
   }
@@ -34,11 +39,26 @@ handleChangeInput = (text) => { this.setState({mood: text })}
 
 const styles = StyleSheet.create ({
    container: {
-     justifyContent : 'center',
+     flex: 1,
+     backgroundColor: 'grey',
+     justifyContent: 'center',
      alignItems: 'center'
-     //color: 'blue',
-     //marginTop: 20,
-     //textAlign : 'center',
-     //fontSize: 40
+   },
+   textBoxContainer: {
+     height : '20%',
+     width: '70%',
+     position: 'absolute',
+     backgroundColor: 'black',
+     borderRadius : 15,
+     opacity: 0.5
+   },
+   textStyle: {
+     borderWidth: 2,
+     paddingHorizontal: 20,
+     paddingVertical: 5,
+     borderColor: 'black'
+   },
+   buttonContainer: {
+     marginTop: 10
    }
 });
