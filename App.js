@@ -1,87 +1,38 @@
 import React, { Component } from 'react';
-import {AppRegistry, Text,Button, StyleSheet, Alert, TextInput, View} from 'react-native';
+import {Text, View} from 'react-native';
+import {createBottomTabNavigator, createAppContainer, TouchableWithoutFeedback,createStackNavigator, Animation, Easing} from 'react-navigation';
+import Icon from 'react-native-vector-icons/Entypo';
+import HomeScreen from './screens/HomeScreen';
+import MapScreen from './screens/MapScreen';
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        input: '',
-        output: ''
-      }
+const AppNavigator = createBottomTabNavigator({
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: {
+      tabBarLabel: 'Home',
+      tabBarIcon: ({tintColor}) => (
+        <Icon name="home" color={tintColor} size={24} />
+      )
     }
-
-
-handleChangeInput = (text) => { this.setState({input: text })}
-async getSentimentAsync(text) {
-  // var form = new FormData();
-  // form.append("text", text);
-  fetch("http://text-processing.com/api/sentiment/", {
-     method: "POST",
-     body: "text=" + text,
-     headers: {
-         "Content-Type": "application/x-www-form-urlencoded"
-     }
-    })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({output: responseJson.probability.pos.toString()})
-      Alert.alert(this.state.output);
-    })
-
-    .catch((error) => {
-      console.error(error);
-    });
-}
-
-  render() {
-    return (
-      <View style={styles.container}>
-              <View style = {styles.textBoxContainer}></View>
-              <View style = {{position: 'relative'}}>
-                  <TextInput
-                      style={styles.textStyle}
-                      placeholder = "How do you feel this morning?"
-                      onChangeText = {this.handleChangeInput}
-                  />
-              </View>
-              <View style = {styles.buttonContainer}>
-                  <Button
-                      style = {styles.buttonStyle}
-                      onPress={() => {
-                      this.handleChangeInput
-                      this.getSentimentAsync(this.state.input);
-                      }}
-                      title = "SUBMIT"
-                      color = "black"
-                  />
-              </View>
-       </View>
-    );
+  },
+  Map: {
+    screen: MapScreen,
+    navigationOptions: {
+      tabBarLabel: 'Map',
+      tabBarIcon: ({tintColor}) => (
+        <Icon name="map" color={tintColor} size={24} />
+    )},
   }
-}
-
-const styles = StyleSheet.create ({
-   container: {
-     flex: 1,
-     backgroundColor: 'grey',
-     justifyContent: 'center',
-     alignItems: 'center'
-   },
-   textBoxContainer: {
-     height : '20%',
-     width: '70%',
-     position: 'absolute',
-     backgroundColor: 'black',
-     borderRadius : 15,
-     opacity: 0.5
-   },
-   textStyle: {
-     borderWidth: 2,
-     paddingHorizontal: 20,
-     paddingVertical: 5,
-     borderColor: 'black'
-   },
-   buttonContainer: {
-     marginTop: 10
-   }
+}, {
+    initialRouteName: 'Home',
+    tabBarOptions: {
+      showLabel: false,
+      style: {backgroundColor: '#0d7aef'},
+      inactiveTintColor: 'black',
+      activeTintColor: '#C9C5C5'
+    },
 });
+
+
+
+export default createAppContainer(AppNavigator);
