@@ -33,36 +33,6 @@ const AppNavigator = createBottomTabNavigator({
     },
 });
 
-// const AppNavigator = createStackNavigator({
-//     Home: {
-//       screen: HomeScreen,
-//     },
-//     Map: {
-//       screen: MapScreen,
-//     },
-//     initialRouteName: 'Home',
-//   //  headerStyle: {backgroundColor: '#0d7aef'}
-// });
-
-<<<<<<< HEAD
-=======
-handleChangeInput = (text) => { this.setState({input: text })}
-async getSentimentAsync(text) {
-  // var form = new FormData();
-  // form.append("text", text);
-  fetch("http://text-processing.com/api/sentiment/", {
-     method: "POST",
-     body: "text=" + text,
-     headers: {
-         "Content-Type": "application/x-www-form-urlencoded"
-     }
-    })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({output: responseJson.label})
-      Alert.alert(this.state.output);
-    })
->>>>>>> 43671fff827f7f01b53fbc956ec0cc8331365102
 
 
 export default createAppContainer(AppNavigator);
